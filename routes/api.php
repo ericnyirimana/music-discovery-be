@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(['prefix' => 'v1'], function () {
+    Route::get('/google/redirect', [App\Http\Controllers\GoogleLoginController::class, 'redirectToAuth']);
+    Route::get('/google/callback', [App\Http\Controllers\GoogleLoginController::class, 'handleAuthCallback']);
+});
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
