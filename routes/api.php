@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\AlbumController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => 'v1'], function () {
+Route::prefix('v1')->group(function () {
     Route::get('/google/redirect', [App\Http\Controllers\GoogleLoginController::class, 'redirectToAuth']);
     Route::get('/google/callback', [App\Http\Controllers\GoogleLoginController::class, 'handleAuthCallback']);
+    Route::resource('artists', ArtistController::class)->middleware('auth:sanctum');
+    Route::resource('albums', AlbumController::class)->middleware('auth:sanctum');
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
