@@ -42,7 +42,9 @@ class AlbumController extends Controller
             $results = [];
             foreach($favoriteAlbums as $favoriteAlbum){
                 $retrieveLastFmdata = Http::get($this->lastFmUrl.'?method=album.getinfo&api_key='.$this->lastFmKey.'&mbid='.$favoriteAlbum->mbid.'&format=json');
-                $results[] = json_decode($retrieveLastFmdata);
+                $decodedData = json_decode($retrieveLastFmdata, true);
+                $decodedData['mbid'] = $favoriteAlbum->mbid;
+                $results[] = $decodedData;
             }
             return response()->json(['success' => true, 'data' => $results], 200);
         } catch(\Exception $e){
