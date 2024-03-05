@@ -1,3 +1,94 @@
+# Music Discovery
+
+Music Discovery is an APP that consumes <a href="https://www.last.fm/api">LAST FM APIs</a> and enables to get Artists and Albums information
+
+# Clone repository
+
+Before starting the installation you need to clone the repository through the below git command:
+
+    git clone https://github.com/ericnyirimana/music-discovery-be.git
+
+# Add Environment Variables
+
+Create .env in the root folder and add the below variables
+
+    DB_HOST=mysql
+    
+    GOOGLE_CLIENT_ID={YOUR_GOOGLE_CLIENT_ID}
+    GOOGLE_CLIENT_SECRET={YOUR_GOOGLE_CLIENT_SECRET}
+    GOOGLE_REDIRECT_URL={YOUR_GOOGLE_REDIRECT_URL}
+    
+    SESSION_DRIVER=cookie
+    SANCTUM_STATEFUL_DOMAINS=.yourdomain
+    SESSION_DOMAIN=.yourdomain
+    
+    LAST_FM_API_URL=https://ws.audioscrobbler.com/2.0/
+    LAST_FM_KEY={YOUR_LAST_FM_API_KEY}
+
+### Installing using sail up
+
+Laravel Sail is a light-weight command-line interface for interacting with Laravel's default Docker development environment. Sail provides a great starting point for building a Laravel application using PHP, MySQL, and Redis without requiring prior Docker experience.
+
+```
+> ./vendor/bin/sail up
+```
+
+### Running migration
+
+Open another terminal while sail up is done and run the below command
+
+```
+> ./vendor/bin/sail artisan migrate
+```
+
+### Running migration
+
+Open another terminal while sail up is done and run the below command
+
+```
+> ./vendor/bin/sail artisan migrate
+```
+
+#### Run the server
+
+```
+> ./vendor/bin/sail artisan serve
+```
+
+>Access the app through <a href="http://localhost">http://localhost</a>
+
+
+
+### Endpoints
+
+| Enpoint | Methods  | Description  |
+| ------- | --- | --- |
+| /api/v1/albums | POST | Add favorite album |
+| /api/v1/albums | GET | Get favorite albums |
+| /api/v1/albums/<id> | GET | Get specific favorite album |
+| /api/v1/albums/<id> | DELETE | Delete a favorite album |
+| /api/v1/albums/<id> | UPDATE | Update a favorite album |
+| /api/v1/artists | POST | Create a favorite artist |
+| /api/v1/artists | GET | Get all favorite artists |
+| /api/v1/artists/<id> | GET | Get a specific favorite artist |
+| /api/v1/artists/<id> | DELETE | Delete a favorite artist |
+| /api/v1/artists/<id> | UPDATE | Delete a favorite artist |
+
+### Responses
+
+#### On success
+
+>{ "status": 200, "data": [ { ... }] }
+​
+#### On error
+
+>{ "status": 400, "message": "relevant-error-message" }
+
+
+## Contributors
+
+- NYIRIMANA Eric
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
