@@ -13,6 +13,13 @@ class Album extends Model
         'user_id', 'mbid',
     ];
 
+    // public function getMbidAttribute()
+    // {
+
+    //     return $this->mbid;
+
+    // }
+
     public function user()
     {
 
