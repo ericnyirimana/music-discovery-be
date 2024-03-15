@@ -2,13 +2,13 @@
 
 Music Discovery is an APP that consumes <a href="https://www.last.fm/api">LAST FM APIs</a> and enables to get Artists and Albums information
 
-# Clone repository
+### Clone repository
 
 Before starting the installation you need to clone the repository through the below git command:
 
     git clone https://github.com/ericnyirimana/music-discovery-be.git
 
-# Add Environment Variables
+### Add Environment Variables
 
 Create .env in the root folder and add the below variables
 
