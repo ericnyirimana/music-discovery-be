@@ -19,6 +19,7 @@ class AlbumController extends Controller
     {
         $this->lastFmUrl =  config('lastfm.last_fm_url');
         $this->lastFmKey =  config('lastfm.last_fm_api_key');
+        $this->authorizeResource(Album::class);
     }
 
     public function validation(Request $request, $album = null)
@@ -38,12 +39,12 @@ class AlbumController extends Controller
     {
         try{
             $user = $request->user();
-            $favoriteAlbums = Album::where('user_id', $user->id)->get();
+            $favoriteAlbums = Album::where('user_id', $user->id)->paginate();
             $results = [];
             foreach($favoriteAlbums as $favoriteAlbum){
                 $retrieveLastFmdata = Http::get($this->lastFmUrl.'?method=album.getinfo&api_key='.$this->lastFmKey.'&mbid='.$favoriteAlbum->mbid.'&format=json');
                 $decodedData = json_decode($retrieveLastFmdata, true);
-                $decodedData['mbid'] = $favoriteAlbum->mbid;
+                $decodedData['id'] = $favoriteAlbum->id;
                 $results[] = $decodedData;
             }
             return response()->json(['success' => true, 'data' => $results], 200);
@@ -87,11 +88,11 @@ class AlbumController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, string $id)
+    public function show(Request $request, Album $album)
     {
         try{
             $user = $request->user();
-            $favoriteAlbum = Album::where([['user_id', $user->id], ['mbid', $id]])->first();
+            $favoriteAlbum = Album::where([['user_id', $user->id], ['id', $album->id]])->first();
             $results = [];
             if($favoriteAlbum){
                 $retrieveLastFmdata = Http::get($this->lastFmUrl.'?method=album.getinfo&api_key='.$this->lastFmKey.'&mbid='.$favoriteAlbum->mbid.'&format=json');
@@ -116,14 +117,14 @@ class AlbumController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Album $album)
     {
         $this->validation($request);
         try{
             $user = $request->user();
-            $favoriteAlbum = Album::where([['user_id', $user->id], ['id', $id]])->first();
+            $favoriteAlbum = Album::where([['user_id', $user->id], ['id', $album->id]])->first();
             if($favoriteAlbum){
-                Album::where([['user_id', $user->id], ['id', $id]])->update([
+                Album::where([['user_id', $user->id], ['id', $album->id]])->update([
                     'mbid' => $request->input('mbid'),
                     'updated_at' => Carbon::now()
                 ]);
@@ -139,11 +140,11 @@ class AlbumController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, string $id)
+    public function destroy(Request $request, Album $album)
     {
         try{
             $user = $request->user();
-            $deleteAlbum = Album::where([['user_id', $user->id], ['mbid', $id]])->delete();
+            $deleteAlbum = Album::where([['user_id', $user->id], ['id', $album->id]])->delete();
             if($deleteAlbum){
                 return response()->json(['message' => 'Album removed from favorites'], 200);
             }
