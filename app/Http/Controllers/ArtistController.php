@@ -78,7 +78,7 @@ class ArtistController extends Controller
                 return response()->json(['message' => 'Artist already saved to favorites successfully'], 201);
             }
             $artist->save();
-            return response()->json(['message' => 'Artist saved to favorites successfully'], 201);
+            return response()->json(['message' => 'Artist saved to favorites successfully', 'id' => $artist->id], 201);
         } catch(\Exception $e) {
             Log::error("An error occorued while creating an artist ". $e);
             return response()->json(['message' => 'Something went wrong'], 500);
@@ -128,7 +128,7 @@ class ArtistController extends Controller
                     'mbid' => $request->input('mbid'),
                     'updated_at' => Carbon::now()
                 ]);
-                return response()->json(['success' => 'Artist updated successfully'], 201);
+                return response()->json(['success' => 'Artist updated successfully'], 200);
             }
             return response()->json(['message' => 'Artist not found'], 404);
         } catch(\Exception $e) {

@@ -78,7 +78,7 @@ class AlbumController extends Controller
                 return response()->json(['message' => 'Album already saved to favorites successfully'], 201);
             }
             $album->save();
-            return response()->json(['message' => 'Album saved to favorites successfully'], 201);
+            return response()->json(['message' => 'Album saved to favorites successfully', 'id' => $album->id], 201);
         } catch(\Exception $e) {
             Log::error("An error occorued while creating an album ". $e);
             return response()->json(['message' => 'Something went wrong'], 500);
@@ -128,7 +128,7 @@ class AlbumController extends Controller
                     'mbid' => $request->input('mbid'),
                     'updated_at' => Carbon::now()
                 ]);
-                return response()->json(['success' => 'Album updated successfully'], 201);
+                return response()->json(['success' => 'Album updated successfully'], 200);
             }
             return response()->json(['message' => 'Album not found'], 404);
         } catch(\Exception $e) {

@@ -55,6 +55,12 @@ Open another terminal while sail up is done and run the below command
 > ./vendor/bin/sail artisan serve
 ```
 
+#### Run tests
+On First use, you need to create `testing` database and therefore run the below command:
+```
+> ./vendor/bin/sail artisan test
+```
+
 >Access the app through <a href="http://localhost">http://localhost</a>
 
 
